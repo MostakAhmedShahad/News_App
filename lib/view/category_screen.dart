@@ -1,3 +1,6 @@
+
+
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/categories_news_model.dart';
@@ -16,20 +19,19 @@ class CategoryScreen extends StatefulWidget {
 
 class _CategoryScreenState extends State<CategoryScreen> {
   NewsViewModel newsViewModel = NewsViewModel();
-
   final format = DateFormat('MMMM dd, yyyy');
   String categoryName = 'General';
-
   List<String> categoriesList = [
     'General',
     'Entertainment',
     'Health',
     'Sports',
-    'Bussiness',
+    'Business',
     'Technology'
   ];
   TextEditingController searchController = TextEditingController();
   bool isSearching = false;
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height * 1;
@@ -37,50 +39,40 @@ class _CategoryScreenState extends State<CategoryScreen> {
     return Scaffold(
       appBar: AppBar(
         title: isSearching
-            ? Padding(
-              padding: const EdgeInsets.all(0.0),
-              child: TextField(
-                  controller: searchController,
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    hintText: "Search...",
-                    hintStyle: TextStyle(color: Colors.white70),
-                    border: InputBorder.none,
-                  ),
-                  style: TextStyle(color: Colors.white, fontSize: 18),
-                  onChanged: (value) {
-                    // Handle search logic
-                    print("Searching: $value");
-                  },
+            ? TextField(
+                controller: searchController,
+                autofocus: true,
+                decoration: InputDecoration(
+                  hintText: "Search...",
+                  hintStyle: TextStyle(color: Colors.white70),
+                  border: InputBorder.none,
                 ),
-            )
+                style: TextStyle(color: Colors.white, fontSize: 18),
+                onChanged: (value) {
+                  print("Searching: $value");
+                },
+              )
             : Text("News App", style: TextStyle(color: Colors.white)),
         backgroundColor: Colors.blueAccent,
         actions: [
           isSearching
-              ? Padding(
-                padding: const EdgeInsets.all(0.0),
-                child: IconButton(
-                    icon: Icon(Icons.close, color: Colors.white),
-                    onPressed: () {
-                      setState(() {
-                        isSearching = false;
-                        searchController.clear();
-                      });
-                    },
-                  ),
-              )
-              : Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: IconButton(
-                    icon: Icon(Icons.search, color: Colors.white),
-                    onPressed: () {
-                      setState(() {
-                        isSearching = true;
-                      });
-                    },
-                  ),
-              ),
+              ? IconButton(
+                  icon: Icon(Icons.close, color: Colors.white),
+                  onPressed: () {
+                    setState(() {
+                      isSearching = false;
+                      searchController.clear();
+                    });
+                  },
+                )
+              : IconButton(
+                  icon: Icon(Icons.search, color: Colors.white),
+                  onPressed: () {
+                    setState(() {
+                      isSearching = true;
+                    });
+                  },
+                ),
         ],
       ),
       body: Padding(
@@ -94,6 +86,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   itemCount: categoriesList.length,
                   itemBuilder: (context, index) {
                     return InkWell(
+                      onTap: () {
+                        setState(() {
+                          categoryName = categoriesList[index];
+                        });
+                      },
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Container(
@@ -139,8 +136,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             .toString());
 
                         return InkWell(
-                          onTap: () => openWebsite(openWebsite(
-                              snapshot.data!.articles![index].url.toString())),
+                          onTap: () => openWebsite(snapshot.data!.articles![index].url.toString()),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Row(

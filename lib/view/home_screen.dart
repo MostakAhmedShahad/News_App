@@ -1,3 +1,7 @@
+
+
+ 
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/categories_news_model.dart';
@@ -75,7 +79,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 if (FilterList.thewashingtonpost.name == item.name) {
                   name = 'the-washington-post';
                 }
-                //newsViewModel.fetchNewsChannelsHeadlinesApi;
                 setState(() {
                   selectedMenu = item;
                 });
@@ -134,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           .toString());
 
                       return InkWell(
-                        onTap: () => openWebsite(  openWebsite(snapshot.data!.articles![index].url.toString())),
+                        onTap: () => openWebsite(snapshot.data!.articles![index].url.toString()),
                         child: SizedBox(
                           child: Stack(
                             alignment: Alignment.center,
@@ -235,7 +238,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           InkWell(
-           
             child: Padding(
               padding: EdgeInsets.all(20),
               child: FutureBuilder<CategoriesNewsModel>(
@@ -250,18 +252,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   } else {
                     return ListView.builder(
-                      // scrollDirection: Axis.vertical,
                       shrinkWrap: true,
                       itemCount: snapshot.data!.articles!.length,
                       itemBuilder: (context, index) {
                         DateTime dateTime = DateTime.parse(snapshot
                             .data!.articles![index].publishedAt
                             .toString());
-            
+
                         return InkWell(
-                           onTap: () => openWebsite(  openWebsite(snapshot.data!.articles![index].url.toString())),
+                          onTap: () => openWebsite(snapshot.data!.articles![index].url.toString()),
                           child: Padding(
-                            
                             padding: const EdgeInsets.all(8.0),
                             child: Row(
                               children: [
@@ -341,7 +341,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-  
+
   openWebsite(String url) async {
     final Uri uri = Uri.parse(url);
 
